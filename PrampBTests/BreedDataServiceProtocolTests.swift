@@ -18,36 +18,33 @@ final class BreedDataServiceProtocolTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    // Test with empty dataset
-    func testEmptyDataset() async {
-        // Arrange
+    func test_BreedMockDataService_loadData_shouldBeEmpty() async {
+        // Given
         let emptyMockService = BreedMockDataService(results: [])
         
-        // Act
+        // When
         await emptyMockService.loadData()
         
-        // Assert
+        // Then
         XCTAssertTrue(emptyMockService.results.isEmpty, "Results should be empty")
     }
     
-    // Test with mock data
-    func testMockDataLoading() async {
-        // Arrange
+    func test_BreedMockDataService_loadData_shouldHaveMockData() async {
+        // Given
         let mockBreed = Breed.mock
         let mockService = BreedMockDataService(results: [mockBreed])
         
-        // Act
+        // Then
         await mockService.loadData()
         
-        // Assert
+        // When
         XCTAssertFalse(mockService.results.isEmpty, "Results should not be empty")
         XCTAssertEqual(mockService.results.count, 1, "Should have exactly one breed")
         XCTAssertEqual(mockService.results.first?.name, "Abyssinian", "Mock breed should be Abyssinian")
     }
     
-    // Test actual JSON decoding with a mock JSON file
-    func testJSONDecoding() throws {
-        // This simulates the JSON response from the API
+    func test_JSONDecoder_decode_shouldDecodeBreedsData() throws {
+        // Given
         let jsonString = """
         [
             {
@@ -67,13 +64,11 @@ final class BreedDataServiceProtocolTests: XCTestCase {
         ]
         """
         
-        // Convert the string to Data
+        // Then
         let jsonData = jsonString.data(using: .utf8)!
-        
-        // Decode the data
         let breeds = try JSONDecoder().decode([Breed].self, from: jsonData)
         
-        // Assert
+        // When
         XCTAssertEqual(breeds.count, 2, "Should decode 2 breeds")
         XCTAssertEqual(breeds[0].name, "Abyssinian", "First breed should be Abyssinian")
         XCTAssertEqual(breeds[1].name, "Bengal", "Second breed should be Bengal")

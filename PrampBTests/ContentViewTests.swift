@@ -17,30 +17,27 @@ final class ContentViewTests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-    
-    // Tests for the ContentView using dependency injection
         
-    func testContentViewWithEmptyResults() {
-        // Arrange
+    func test_ContentView_init_shouldInitViewWithEmptyData() {
+        // Given
         let mockService = BreedMockDataService(results: [])
         
-        // Act - Create ContentView with the mock service
+        // Then
         let contentView = ContentView(dataService: mockService)
         
-        // We can test the view properties or behavior in SwiftUI previews
-        // But in XCTest, we mainly verify it can be created with our mock
+        // When
         XCTAssertNotNil(contentView)
     }
     
-    func testContentViewWithMockResults() {
-        // Arrange
+    func test_ContentView_init_shouldInitViewWithMockData() {
+        // Given
         let mockBreed = Breed.mock
         let mockService = BreedMockDataService(results: [mockBreed])
         
-        // Act - Create ContentView with the mock service
+        // Then
         let contentView = ContentView(dataService: mockService)
         
-        // Assert it can be created
+        // When
         XCTAssertNotNil(contentView)
     }
 }

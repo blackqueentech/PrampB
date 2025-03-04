@@ -37,7 +37,6 @@ struct ContentView: View {
             .listStyle(.plain)
             .task {
                 await dataService.loadData()
-                // Update local state with data from service
                 breeds = dataService.results
             }
             .navigationTitle("Catssss")
